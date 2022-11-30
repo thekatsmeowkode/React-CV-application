@@ -1,15 +1,15 @@
 import React from "react";
 
-const PersonalInfo = (props) => {
-  const { thingy } = props;
+export default class PersonalInfo extends React.Component {
+  render() {
+    let firstName = this.props.firstName;
+    let lastName = this.props.lastName;
 
-  console.log(Object.values(thingy))
-  return (
-      Object.values(thingy).map((thing) => {
-        return (<p className='firstNameRender' key={thing}>
-            {thing}</p>)
-      }))
-  ;
-};
-
-export default PersonalInfo;
+    return (
+      <p className="firstNameRender" key={this.props.firstName}>
+        {firstName} {lastName}
+        {Object.values(this.props.objy).forEach((each) => {console.log(each)})}
+      </p>
+    );
+  }
+}
