@@ -1,3 +1,8 @@
+:root {
+    --dark-cornflower: rgb(54, 78, 121);
+    --light-cornflower: rgb(200, 217, 248)}
+
+    
 .App {
     margin:0;
     padding:0;
@@ -38,4 +43,34 @@
 .firstNameRender {
     font-size:12px;
     color:black;
+}
+
+.input-label {
+    font-size:16px;
+    color:var(--dark-cornflower);
+    margin-top:.3rem;
+    margin-bottom:.3rem;
+    margin-left: -.02rem;
+}
+
+.input-field {
+    font-size:14px;
+    border:1px solid var(--dark-cornflower);
+    border-radius:5px;
+    padding:.5rem;
+}
+
+.input-field:focus {
+    background-color: var(--light-cornflower);
+}
+
+.input-field-container {
+    display:flex;
+    flex-direction:column;
+}
+
+.grid-fields {
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr;
 }

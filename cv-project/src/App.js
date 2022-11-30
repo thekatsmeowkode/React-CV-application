@@ -2,6 +2,7 @@ import "./App.css";
 import uniqid from "uniqid";
 import React, { Component } from "react";
 import PersonalInfo from "./components/personal-info";
+import Input from "./components/input-field";
 
 export default class App extends Component {
   state = {
@@ -13,12 +14,12 @@ export default class App extends Component {
     const target = event.target;
     const value = target.value;
     const name = target.name;
-    this.setState({[name]:value})
+    this.setState({ [name]: value });
   };
 
   onSubmitCV = (event) => {
     event.preventDefault();
-    this.setState({ firstName: "", lastName: "" });
+    this.setState({ fullName: "", lastName: "", title: "" });
   };
 
   render() {
@@ -27,30 +28,41 @@ export default class App extends Component {
         <div className="header">CV Creator</div>
         <div className="left-side">
           <form onSubmit={this.onSubmitCV}>
-            <input
+            <div className="grid-fields"></div>
+            <Input
               type="text"
-              name="firstName"
-              id="firstName"
+              name="fullName"
+              id="fullName"
               onChange={this.handleChange}
-              value={this.state.firstName}
-              placeholder="First Name"
+              value={this.state.fullName}
+              placeholder="Full Name"
             />
-            <input
+            <Input
               type="text"
-              id="lastName"
-              name="lastName"
+              id="title"
+              name="title"
               onChange={this.handleChange}
-              value={this.state.lastName}
-              placeholder="Last Name"
+              value={this.state.title}
+              placeholder="Title"
+            />
+            <Input
+              type="text"
+              id="address"
+              name="address"
+              onChange={this.handleChange}
+              value={this.state.address}
+              placeholder="Address"
             />
             <button>Generate CV</button>
           </form>
         </div>
         <div className="right-side">
-          <PersonalInfo firstName={this.state.firstName} 
-          lastName={this.state.lastName}
-          objy={this.state}
-          key="personal-info" />
+          <PersonalInfo
+            firstName={this.state.firstName}
+            lastName={this.state.lastName}
+            objy={this.state}
+            key="personal-info"
+          />
         </div>
       </div>
     );

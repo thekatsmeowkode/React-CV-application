@@ -8,7 +8,6 @@ export default class PersonalInfo extends React.Component {
     return (
       <p className="firstNameRender" key={this.props.firstName}>
         {firstName} {lastName}
-        {Object.values(this.props.objy).forEach((each) => {console.log(each)})}
       </p>
     );
   }
