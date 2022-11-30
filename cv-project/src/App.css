@@ -2,6 +2,11 @@
     --dark-cornflower: rgb(54, 78, 121);
     --light-cornflower: rgb(200, 217, 248)}
 
+* {
+    margin:0px;
+    padding:0px;
+    overflow:none;
+}
     
 .App {
     margin:0;
@@ -28,29 +33,46 @@
     box-shadow:12px 12px 3px 1px rgba(0, 0, 255, .1);
 }
 
+.resume-header {
+    background-color:gray;
+    height:10vh;
+    color:white;
+    padding-top:1rem;
+    padding-left:1.5rem;
+}
+
 .left-side {
     grid-row: 2 / 3;
     grid-column:1 / 2;
     padding:1rem;
-
 }
 
 .right-side {
     grid-row: 2 / 3;
-    grid-column: 2 / 3
+    grid-column: 2 / 3;
+    padding-top: 1rem;
+    padding-left:1rem;
+    padding-right:1rem;
 }
 
-.firstNameRender {
-    font-size:12px;
-    color:black;
+.fullName-render {
+    font-size:34px;
+    color:white;
+    margin:0;
+    padding:0
+}
+
+h6 {
+    font-size: 20px;
+    margin:0
 }
 
 .input-label {
     font-size:16px;
     color:var(--dark-cornflower);
     margin-top:.3rem;
-    margin-bottom:.3rem;
-    margin-left: -.02rem;
+    margin-bottom:.1rem;
+    margin-left: .1rem;
 }
 
 .input-field {
@@ -71,6 +93,36 @@
 
 .grid-fields {
     display:grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1fr 1fr 1fr 1fr;
+    grid-template-columns: repeat(2, 1fr);
+    gap:10px;
+}
+
+.body {
+    display:grid;
+    grid-template-columns: 2fr 1fr;
+    color:black;
+    grid-column: 0 / 1;
+    justify-content: space-between;
+    padding:.5rem;
+}
+
+.sidebar {
+    grid-column: 1 / 2
+}
+
+.description {
+    padding:.5rem;
+    padding-bottom: 1rem;
+    font-size:14px;
+    border-bottom: 1px solid gray
+}
+
+.body-headers {
+    font-size:20px;
+    padding:.5rem;
+}
+
+.sidebar-headers {
+    padding:.5rem;
+    font-size:20px;
 }

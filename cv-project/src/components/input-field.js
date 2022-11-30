@@ -1,7 +1,8 @@
 import React from "react";
 
 export default class Input extends React.Component {
-  render(props) {
+    render() {
+    
     return (
       <div className="input-field-container">
         <label className="input-label" htmlFor={this.props.name}>
