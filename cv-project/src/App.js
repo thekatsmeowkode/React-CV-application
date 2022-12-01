@@ -16,7 +16,8 @@ export default class App extends Component {
       description: "",
       phone: "",
     },
-    experiences: [{ dateStart: "", dateEnd: "", jobTitle: "", company: "" }],
+    experiences: [{ dateStart: "", dateEnd: "", jobTitle: "", company: "", jobDescription: ''}],
+    education: [{eduStart: '', eduEnd: '', schoolName: '', major: '', eduLocation: '', eduNotes: ''}]
   };
 
   handleChange = (event) => {
@@ -25,16 +26,17 @@ export default class App extends Component {
     const name = target.name;
     this.setState((prevState) => ({
       personalInfo: { ...prevState.personalInfo, [name]: value },
-      ...prevState.experiences,
+      ...prevState.experiences, ...prevState.education
     }));
   };
 
   handleAddExperience = () => {
     this.setState((prevState) => ({
       ...prevState.personalInfo,
+      ...prevState.education,
       experience: [
         ...prevState.experience,
-        { dateStart: "", dateEnd: "", jobTitle: "", company: "" },
+        { dateStart: "", dateEnd: "", jobTitle: "", company: "", jobDescription: '', },
       ],
     }));
   };
@@ -141,7 +143,7 @@ export default class App extends Component {
                   name="jobTitle"
                   onChange={this.handleChange}
                   value={this.state.experiences.jobTitle}
-                  placeHolder="Job Title"
+                  placeholder="Job Title"
                 />
                 <Input
                   type="text"
@@ -149,11 +151,72 @@ export default class App extends Component {
                   name="company"
                   onChange={this.handleChange}
                   value={this.state.experiences.company}
-                  placeHolder="Company Name"
+                  placeholder="Company Name / Location"
                 />
+                <div className="input-field-container">
+                  <label htmlFor="jobDescription" className="input-label">
+                    Job Description
+                  </label>
+                  <textarea
+                    className="input-field"
+                    type="textarea"
+                    id="jobDescription"
+                    name="jobDescription"
+                    onChange={this.handleChange}
+                    value={this.state.experiences.jobDescription}
+                    placeholder="jobDescription"
+                  ></textarea>
+                </div>
               </div>
             </div>
-
+            <div className="body-headers">Education</div>
+            <div className="education-inputs">
+              <div className="grid-fields">
+              <Input
+                  type="text"
+                  id="eduStart"
+                  name="eduStart"
+                  onChange={this.handleChange}
+                  value={this.state.education.eduStart}
+                  placeholder="Date Started"
+                />
+                <Input
+                  type="text"
+                  id="eduEnd"
+                  name="eduEnd"
+                  onChange={this.handleChange}
+                  value={this.state.education.eduEnd}
+                  placeholder="Date Ended"/>
+                <Input
+                  type="text"
+                  id="schoolName"
+                  name="schoolName"
+                  onChange={this.handleChange}
+                  value={this.state.education.schoolName}
+                  placeholder="School Name"/>
+                <Input
+                  type="text"
+                  id="eduLocation"
+                  name="eduLocation"
+                  onChange={this.handleChange}
+                  value={this.state.education.eduLocation}
+                  placeholder="Location"/>
+                <Input
+                  type="text"
+                  id="major"
+                  name="major"
+                  onChange={this.handleChange}
+                  value={this.state.education.major}
+                  placeholder="Major / Minor"/>
+                <Input
+                  type="text"
+                  id="eduNotes"
+                  name="eduNotes"
+                  onChange={this.handleChange}
+                  value={this.state.education.eduNotes}
+                  placeholder="Notes"/>
+              </div>
+            </div>
             <button>Generate CV</button>
           </form>
         </div>
