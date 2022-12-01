@@ -16,8 +16,25 @@ export default class App extends Component {
       description: "",
       phone: "",
     },
-    experiences: [{ dateStart: "", dateEnd: "", jobTitle: "", company: "", jobDescription: ''}],
-    education: [{eduStart: '', eduEnd: '', schoolName: '', major: '', eduLocation: '', eduNotes: ''}]
+    experiences: [
+      {
+        dateStart: "",
+        dateEnd: "",
+        jobTitle: "",
+        company: "",
+        jobDescription: "",
+      },
+    ],
+    education: [
+      {
+        eduStart: "",
+        eduEnd: "",
+        schoolName: "",
+        major: "",
+        eduLocation: "",
+        eduNotes: "",
+      },
+    ],
   };
 
   handleChange = (event) => {
@@ -26,19 +43,47 @@ export default class App extends Component {
     const name = target.name;
     this.setState((prevState) => ({
       personalInfo: { ...prevState.personalInfo, [name]: value },
-      ...prevState.experiences, ...prevState.education
+      ...prevState.experiences,
+      ...prevState.education,
     }));
   };
 
-  handleAddExperience = () => {
+  handleAddExperience = (e) => {
+    e.preventDefault();
     this.setState((prevState) => ({
-      ...prevState.personalInfo,
-      ...prevState.education,
-      experience: [
-        ...prevState.experience,
-        { dateStart: "", dateEnd: "", jobTitle: "", company: "", jobDescription: '', },
+      ...prevState,
+      experiences: [
+        ...prevState.experiences,
+        {
+          dateStart: "",
+          dateEnd: "",
+          jobTitle: "",
+          company: "",
+          jobDescription: ''
+        },
       ],
     }));
+  };
+
+  handleChangeExperience = (event, id) => {
+    const { name, value } = event.target;
+
+    this.setState((prevState) => {
+      const newExp = prevState.experiences.map((exp) => {
+        if (exp.id === id) {
+          return { ...exp, [name]: value };
+        }
+        return exp;
+      });
+      return { ...prevState, experiences: [...newExp] };
+    });
+  };
+
+  handleDeleteExperience = (id) => {
+    this.setState((prevState) => {
+      const revisedExp = prevState.experiences.filter((exp) => exp.id !== id);
+      return { ...prevState, experiences: [...revisedExp] };
+    });
   };
 
   // onSubmitCV = (event) => {
@@ -125,7 +170,7 @@ export default class App extends Component {
                   type="text"
                   id="dateStart"
                   name="dateStart"
-                  onChange={this.handleChange}
+                  onChange={this.handleChangeExperience}
                   value={this.state.experiences.dateStart}
                   placeholder="Date Started"
                 />
@@ -133,7 +178,7 @@ export default class App extends Component {
                   type="text"
                   id="dateEnd"
                   name="dateEnd"
-                  onChange={this.handleChange}
+                  onChange={this.handleChangeExperience}
                   value={this.state.experiences.dateEnd}
                   placeholder="Date Ended"
                 />
@@ -141,7 +186,7 @@ export default class App extends Component {
                   type="text"
                   id="jobTitle"
                   name="jobTitle"
-                  onChange={this.handleChange}
+                  onChange={this.handleChangeExperience}
                   value={this.state.experiences.jobTitle}
                   placeholder="Job Title"
                 />
@@ -149,7 +194,7 @@ export default class App extends Component {
                   type="text"
                   id="company"
                   name="company"
-                  onChange={this.handleChange}
+                  onChange={this.handleChangeExperience}
                   value={this.state.experiences.company}
                   placeholder="Company Name / Location"
                 />
@@ -162,17 +207,28 @@ export default class App extends Component {
                     type="textarea"
                     id="jobDescription"
                     name="jobDescription"
-                    onChange={this.handleChange}
+                    onChange={this.handleChangeExperience}
                     value={this.state.experiences.jobDescription}
                     placeholder="jobDescription"
                   ></textarea>
                 </div>
               </div>
+              <button
+                style={{
+                  height: "2rem",
+                  width: "100%",
+                  padding: ".5rem",
+                  margin: ".5rem",
+                }}
+                onClick={this.handleAddExperience}
+              >
+                Add Experience
+              </button>
             </div>
             <div className="body-headers">Education</div>
             <div className="education-inputs">
               <div className="grid-fields">
-              <Input
+                <Input
                   type="text"
                   id="eduStart"
                   name="eduStart"
@@ -186,35 +242,40 @@ export default class App extends Component {
                   name="eduEnd"
                   onChange={this.handleChange}
                   value={this.state.education.eduEnd}
-                  placeholder="Date Ended"/>
+                  placeholder="Date Ended"
+                />
                 <Input
                   type="text"
                   id="schoolName"
                   name="schoolName"
                   onChange={this.handleChange}
                   value={this.state.education.schoolName}
-                  placeholder="School Name"/>
+                  placeholder="School Name"
+                />
                 <Input
                   type="text"
                   id="eduLocation"
                   name="eduLocation"
                   onChange={this.handleChange}
                   value={this.state.education.eduLocation}
-                  placeholder="Location"/>
+                  placeholder="Location"
+                />
                 <Input
                   type="text"
                   id="major"
                   name="major"
                   onChange={this.handleChange}
                   value={this.state.education.major}
-                  placeholder="Major / Minor"/>
+                  placeholder="Major / Minor"
+                />
                 <Input
                   type="text"
                   id="eduNotes"
                   name="eduNotes"
                   onChange={this.handleChange}
                   value={this.state.education.eduNotes}
-                  placeholder="Notes"/>
+                  placeholder="Notes"
+                />
               </div>
             </div>
             <button>Generate CV</button>
@@ -231,7 +292,21 @@ export default class App extends Component {
                 <p className="description">
                   {this.state.personalInfo.description}
                 </p>
-                <p className="body-headers">Experience</p>
+
+                {this.state.experiences.map((item) => (
+                  <Experience
+                    handleDeleteExperience={this.handleDeleteExperience}
+                    key={uniqid()}
+                    info={item}
+                  />
+                ))}
+                {/* <Experience
+                  dateStart={this.state.experiences[0].dateStart}
+                  dateEnd={this.state.experiences[0].dateEnd}
+                  jobTitle={this.state.experiences[0].jobTitle}
+                  company={this.state.experiences[0].company}
+                  jobDescription={this.state.experiences[0].jobDescription}
+                /> */}
               </div>
               <Sidebar
                 className="sidebar"

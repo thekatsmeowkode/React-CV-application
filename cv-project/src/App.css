@@ -126,5 +126,25 @@ h6 {
 
 .sidebar-headers {
     padding:.5rem;
-    font-size:20px;
+    font-size:18px;
 }
+
+.resume-headers {
+    color:black;
+    font-size: 18px;
+    padding:.5rem;
+}
+
+.exp-dates {
+    font-style: italic;
+    font-weight: bold;
+    grid-column: 0/1;
+    font-size:14px;
+    padding:.5rem;
+}
+
+.split-left {
+    display:grid;
+    grid-template-columns: 1fr 5fr;
+}
+
