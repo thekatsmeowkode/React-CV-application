@@ -4,10 +4,6 @@ export default class Header extends React.Component {
   render() {
     let fullName = this.props.fullName;
     let title = this.props.title;
-    let address = this.props.address;
-    let phone = this.props.phone;
-    let website = this.props.website;
-    let description = this.props.description;
 
     return (
       <div className="resume-header" >
