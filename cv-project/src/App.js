@@ -63,7 +63,10 @@ export default class App extends Component {
     }})
   }
 
-
+  handleDeleteExperience = (event) => {
+    let identifier = event.target.id
+    this.setState({experiences:this.state.experiences.filter(function(item) {return item.id !== identifier})})
+  }
   // onSubmitCV = (event) => {
   //   event.preventDefault();
   //   this.setState({

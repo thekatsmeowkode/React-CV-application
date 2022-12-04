@@ -21,7 +21,7 @@ export default function Experience(props) {
           >
             Edit{" "}
           </button>
-          <button className="delete-button" 
+          <button className="delete-button" id={props.info.id}
             onClick={props.handleDeleteExperience} style={{ height: "1.5rem" }}>
             Delete
           </button>
