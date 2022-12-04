@@ -16,15 +16,16 @@ export default class App extends Component {
       description: "",
       phone: "",
     },
-    experiences: [
+    experience:
       {
+        id: '',
         dateStart: "",
         dateEnd: "",
         jobTitle: "",
         company: "",
         jobDescription: "",
       },
-    ],
+    experiences: [],
     education: [
       {
         eduStart: "",
@@ -38,53 +39,30 @@ export default class App extends Component {
   };
 
   handleChange = (event) => {
-    const target = event.target;
-    const value = target.value;
-    const name = target.name;
     this.setState((prevState) => ({
-      personalInfo: { ...prevState.personalInfo, [name]: value },
-      ...prevState.experiences,
-      ...prevState.education,
+      personalInfo: { ...prevState.personalInfo, [event.target.name]: event.target.value }
     }));
   };
 
-  handleAddExperience = (e) => {
+  handleChangeExp = (event => {
+    this.setState((prevState) => ({
+      experience: {...prevState.experience, [event.target.name]: event.target.value}
+    }))
+  })
+
+  handleAddExperience = (e, data) => {
     e.preventDefault();
-    this.setState((prevState) => ({
-      ...prevState,
-      experiences: [
-        ...prevState.experiences,
-        {
-          dateStart: "",
-          dateEnd: "",
-          jobTitle: "",
-          company: "",
-          jobDescription: ''
-        },
-      ],
-    }));
-  };
+    this.state.experiences.push(data)
+    this.setState({experience: {
+      id: '',
+      dateStart: "",
+      dateEnd: "",
+      jobTitle: "",
+      company: "",
+      jobDescription: ""
+    }})
+  }
 
-  handleChangeExperience = (event, id) => {
-    const { name, value } = event.target;
-
-    this.setState((prevState) => {
-      const newExp = prevState.experiences.map((exp) => {
-        if (exp.id === id) {
-          return { ...exp, [name]: value };
-        }
-        return exp;
-      });
-      return { ...prevState, experiences: [...newExp] };
-    });
-  };
-
-  handleDeleteExperience = (id) => {
-    this.setState((prevState) => {
-      const revisedExp = prevState.experiences.filter((exp) => exp.id !== id);
-      return { ...prevState, experiences: [...revisedExp] };
-    });
-  };
 
   // onSubmitCV = (event) => {
   //   event.preventDefault();
@@ -101,6 +79,7 @@ export default class App extends Component {
   // };
 
   render() {
+
     return (
       <div className="App">
         <div className="header">CV Creator</div>
@@ -170,32 +149,32 @@ export default class App extends Component {
                   type="text"
                   id="dateStart"
                   name="dateStart"
-                  onChange={this.handleChangeExperience}
-                  value={this.state.experiences.dateStart}
+                  onChange={this.handleChangeExp}
+                  value={this.state.experience.dateStart}
                   placeholder="Date Started"
                 />
                 <Input
                   type="text"
                   id="dateEnd"
                   name="dateEnd"
-                  onChange={this.handleChangeExperience}
-                  value={this.state.experiences.dateEnd}
+                  onChange={this.handleChangeExp}
+                  value={this.state.experience.dateEnd}
                   placeholder="Date Ended"
                 />
                 <Input
                   type="text"
                   id="jobTitle"
                   name="jobTitle"
-                  onChange={this.handleChangeExperience}
-                  value={this.state.experiences.jobTitle}
+                  onChange={this.handleChangeExp}
+                  value={this.state.experience.jobTitle}
                   placeholder="Job Title"
                 />
                 <Input
                   type="text"
                   id="company"
                   name="company"
-                  onChange={this.handleChangeExperience}
-                  value={this.state.experiences.company}
+                  onChange={this.handleChangeExp}
+                  value={this.state.experience.company}
                   placeholder="Company Name / Location"
                 />
                 <div className="input-field-container">
@@ -207,8 +186,8 @@ export default class App extends Component {
                     type="textarea"
                     id="jobDescription"
                     name="jobDescription"
-                    onChange={this.handleChangeExperience}
-                    value={this.state.experiences.jobDescription}
+                    onChange={this.handleChangeExp}
+                    value={this.state.experience.jobDescription}
                     placeholder="jobDescription"
                   ></textarea>
                 </div>
@@ -220,7 +199,14 @@ export default class App extends Component {
                   padding: ".5rem",
                   margin: ".5rem",
                 }}
-                onClick={this.handleAddExperience}
+                onClick={(e) => this.handleAddExperience(e, {
+                  id: uniqid(),
+                  dateStart: this.state.experience.dateStart,
+                  dateEnd: this.state.experience.dateEnd,
+                  jobTitle: this.state.experience.jobTitle,
+                  company: this.state.experience.company,
+                  jobDescription: this.state.experience.jobDescription,
+                })}
               >
                 Add Experience
               </button>
@@ -292,12 +278,13 @@ export default class App extends Component {
                 <p className="description">
                   {this.state.personalInfo.description}
                 </p>
-
                 {this.state.experiences.map((item) => (
                   <Experience
                     handleDeleteExperience={this.handleDeleteExperience}
-                    key={uniqid()}
+                    handleChange={this.handleChangeExp}
+                    key={item.id}
                     info={item}
+                    id={item.id}
                   />
                 ))}
                 {/* <Experience

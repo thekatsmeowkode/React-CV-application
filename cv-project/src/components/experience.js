@@ -1,8 +1,7 @@
 import React from "react";
 import Input from "./input-field";
 
-export default class Experience extends React.Component {
-  render() {
+export default function Experience(props) {
     return (
       <div className="experience">
         <div
@@ -23,27 +22,26 @@ export default class Experience extends React.Component {
             Edit{" "}
           </button>
           <button className="delete-button" 
-            onClick={this.props.handleDeleteExperience} style={{ height: "1.5rem" }}>
+            onClick={props.handleDeleteExperience} style={{ height: "1.5rem" }}>
             Delete
           </button>
         </div>
         <div className="resume-split">
           <div className="split-left">
             <p className="exp-dates">
-              {this.props.info.dateStart} - {this.props.info.dateEnd}
+              {props.info.dateStart} - {props.info.dateEnd}
             </p>
             <div className="exp-container" style={{ padding: ".5rem" }}>
               <p style={{ fontSize: "18px", fontWeight: "bold" }}>
-                {this.props.info.jobTitle}
+                {props.info.jobTitle}
               </p>
               <p style={{ fontStyle: "italic", fontSize: "16px" }}>
-                {this.props.info.company}
+                {props.info.company}
               </p>
-              <p>{this.props.info.jobDescription}</p>
+              <p>{props.info.jobDescription}</p>
             </div>
           </div>
         </div>
       </div>
     );
   }
-}
