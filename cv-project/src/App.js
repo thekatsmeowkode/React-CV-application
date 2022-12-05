@@ -5,6 +5,7 @@ import Header from "./components/header";
 import Input from "./components/input-field";
 import Sidebar from "./components/sidebar";
 import Experience from "./components/experience";
+import Education from "./components/education";
 
 export default class App extends Component {
   state = {
@@ -16,57 +17,118 @@ export default class App extends Component {
       description: "",
       phone: "",
     },
-    experience:
-      {
-        id: '',
+    experience: {
+      id: "",
+      dateStart: "",
+      dateEnd: "",
+      jobTitle: "",
+      company: "",
+      jobDescription: "",
+    },
+    experiences: [],
+    education: {
+      eduStart: "",
+      eduEnd: "",
+      schoolName: "",
+      major: "",
+      eduLocation: "",
+      eduNotes: "",
+    },
+    educations: [],
+  };
+
+  handleChange = (event) => {
+    this.setState((prevState) => ({
+      personalInfo: {
+        ...prevState.personalInfo,
+        [event.target.name]: event.target.value,
+      },
+    }));
+  };
+
+  handleChangeExp = (event) => {
+    this.setState((prevState) => ({
+      experience: {
+        ...prevState.experience,
+        [event.target.name]: event.target.value,
+      },
+    }));
+  };
+
+  handleChangeEdu = (event) => {
+    this.setState((prevState) => ({
+      education: {
+        ...prevState.education,
+        [event.target.name]: event.target.value,
+      },
+    }));
+  };
+
+  handleAddExperience = (e, data) => {
+    e.preventDefault();
+    this.state.experiences.push(data);
+    this.setState({
+      experience: {
+        id: "",
         dateStart: "",
         dateEnd: "",
         jobTitle: "",
         company: "",
         jobDescription: "",
       },
-    experiences: [],
-    education: [
-      {
+    });
+  };
+
+  handleAddEducation = (e, data) => {
+    e.preventDefault();
+    this.state.educations.push(data);
+    this.setState({
+      education: {
         eduStart: "",
         eduEnd: "",
         schoolName: "",
         major: "",
         eduLocation: "",
-        eduNotes: "",
+        eduNotes: ""
       },
-    ],
+    });
   };
-
-  handleChange = (event) => {
-    this.setState((prevState) => ({
-      personalInfo: { ...prevState.personalInfo, [event.target.name]: event.target.value }
-    }));
-  };
-
-  handleChangeExp = (event => {
-    this.setState((prevState) => ({
-      experience: {...prevState.experience, [event.target.name]: event.target.value}
-    }))
-  })
-
-  handleAddExperience = (e, data) => {
-    e.preventDefault();
-    this.state.experiences.push(data)
-    this.setState({experience: {
-      id: '',
-      dateStart: "",
-      dateEnd: "",
-      jobTitle: "",
-      company: "",
-      jobDescription: ""
-    }})
-  }
 
   handleDeleteExperience = (event) => {
-    let identifier = event.target.id
-    this.setState({experiences:this.state.experiences.filter(function(item) {return item.id !== identifier})})
+    let identifier = event.target.id;
+    this.setState({
+      experiences: this.state.experiences.filter(function (item) {
+        return item.id !== identifier;
+      }),
+    });
+  };
+
+  handleDeleteEducation = (event) => {
+    let identifier = event.target.id;
+    this.setState({
+      educations: this.state.educations.filter(function (item) {
+        return item.id !== identifier;
+      }),
+    });
+  };
+
+  handleEditExperience = (event) => {
+    let identifier = event.target.id;
+    let itemToEdit = this.state.experiences.find(obj => obj.id === identifier)
+    console.log(itemToEdit)
+    this.setState({experience: {
+      id: identifier,
+      dateStart: itemToEdit.dateStart,
+      dateEnd: itemToEdit.dateEnd,
+      jobTitle: itemToEdit.jobTitle,
+      company: itemToEdit.company,
+      jobDescription: itemToEdit.jobDescription,
+    }})
+    this.setState({ experiences: this.state.experiences.filter(function (item) {
+      return item.id !== identifier
+    })})
   }
+
   // onSubmitCV = (event) => {
   //   event.preventDefault();
   //   this.setState({
@@ -82,7 +144,6 @@ export default class App extends Component {
   // };
 
   render() {
-
     return (
       <div className="App">
         <div className="header">CV Creator</div>
@@ -202,14 +263,16 @@ export default class App extends Component {
                   padding: ".5rem",
                   margin: ".5rem",
                 }}
-                onClick={(e) => this.handleAddExperience(e, {
-                  id: uniqid(),
-                  dateStart: this.state.experience.dateStart,
-                  dateEnd: this.state.experience.dateEnd,
-                  jobTitle: this.state.experience.jobTitle,
-                  company: this.state.experience.company,
-                  jobDescription: this.state.experience.jobDescription,
-                })}
+                onClick={(e) =>
+                  this.handleAddExperience(e, {
+                    id: uniqid(),
+                    dateStart: this.state.experience.dateStart,
+                    dateEnd: this.state.experience.dateEnd,
+                    jobTitle: this.state.experience.jobTitle,
+                    company: this.state.experience.company,
+                    jobDescription: this.state.experience.jobDescription,
+                  })
+                }
               >
                 Add Experience
               </button>
@@ -221,7 +284,7 @@ export default class App extends Component {
                   type="text"
                   id="eduStart"
                   name="eduStart"
-                  onChange={this.handleChange}
+                  onChange={this.handleChangeEdu}
                   value={this.state.education.eduStart}
                   placeholder="Date Started"
                 />
@@ -229,7 +292,7 @@ export default class App extends Component {
                   type="text"
                   id="eduEnd"
                   name="eduEnd"
-                  onChange={this.handleChange}
+                  onChange={this.handleChangeEdu}
                   value={this.state.education.eduEnd}
                   placeholder="Date Ended"
                 />
@@ -237,7 +300,7 @@ export default class App extends Component {
                   type="text"
                   id="schoolName"
                   name="schoolName"
-                  onChange={this.handleChange}
+                  onChange={this.handleChangeEdu}
                   value={this.state.education.schoolName}
                   placeholder="School Name"
                 />
@@ -245,7 +308,7 @@ export default class App extends Component {
                   type="text"
                   id="eduLocation"
                   name="eduLocation"
-                  onChange={this.handleChange}
+                  onChange={this.handleChangeEdu}
                   value={this.state.education.eduLocation}
                   placeholder="Location"
                 />
@@ -253,7 +316,7 @@ export default class App extends Component {
                   type="text"
                   id="major"
                   name="major"
-                  onChange={this.handleChange}
+                  onChange={this.handleChangeEdu}
                   value={this.state.education.major}
                   placeholder="Major / Minor"
                 />
@@ -261,11 +324,32 @@ export default class App extends Component {
                   type="text"
                   id="eduNotes"
                   name="eduNotes"
-                  onChange={this.handleChange}
+                  onChange={this.handleChangeEdu}
                   value={this.state.education.eduNotes}
                   placeholder="Notes"
                 />
               </div>
+              <button
+                style={{
+                  height: "2rem",
+                  width: "100%",
+                  padding: ".5rem",
+                  margin: ".5rem",
+                }}
+                onClick={(e) =>
+                  this.handleAddEducation(e, {
+                    id: uniqid(),
+                    eduStart: this.state.education.eduStart,
+                    eduEnd: this.state.education.eduEnd,
+                    schoolName: this.state.education.schoolName,
+                    eduLocation: this.state.education.eduLocation,
+                    major: this.state.education.major,
+                    eduNotes: this.state.education.eduNotes
+                  })
+                }
+              >
+                Add Education
+              </button>
             </div>
             <button>Generate CV</button>
           </form>
@@ -281,22 +365,31 @@ export default class App extends Component {
                 <p className="description">
                   {this.state.personalInfo.description}
                 </p>
+                <p className="resume-headers" style={{ marginRight: "auto" }}>
+            Experience
+          </p>
                 {this.state.experiences.map((item) => (
                   <Experience
                     handleDeleteExperience={this.handleDeleteExperience}
                     handleChange={this.handleChangeExp}
+                    handleEditExperience={this.handleEditExperience}
                     key={item.id}
                     info={item}
                     id={item.id}
                   />
                 ))}
-                {/* <Experience
-                  dateStart={this.state.experiences[0].dateStart}
-                  dateEnd={this.state.experiences[0].dateEnd}
-                  jobTitle={this.state.experiences[0].jobTitle}
-                  company={this.state.experiences[0].company}
-                  jobDescription={this.state.experiences[0].jobDescription}
-                /> */}
+              <p className="resume-headers" style={{ marginRight: "auto" }}>
+            Education
+          </p>
+                {this.state.educations.map((item) => (
+                  <Education
+                    handleDeleteEducation={this.handleDeleteEducation}
+                    handleChange={this.handleChangeEdu}
+                    key={item.id}
+                    info={item}
+                    id={item.id}
+                  />
+                ))}
               </div>
               <Sidebar
                 className="sidebar"

@@ -1,8 +1,8 @@
 import React from "react";
 
-export default function Experience(props) {
+export default function Education(props) {
   return (
-    <div className="experience">
+    <div className="education">
       <div
         style={{
           display: "flex",
@@ -15,16 +15,16 @@ export default function Experience(props) {
       >
         <button
           className="edit-button"
-          id={props.info.id}
-          onClick={props.handleEditExperience}
           style={{ height: "1.5rem" }}
+          id={props.info.id}
+          onClick={props.handleEditEducation}
         >
-          Edit{" "}
+          Edit
         </button>
         <button
           className="delete-button"
           id={props.info.id}
-          onClick={props.handleDeleteExperience}
+          onClick={props.handleDeleteEducation}
           style={{ height: "1.5rem" }}
         >
           Delete
@@ -33,16 +33,16 @@ export default function Experience(props) {
       <div className="resume-split">
         <div className="split-left">
           <p className="exp-dates">
-            {props.info.dateStart} - {props.info.dateEnd}
+            {props.info.eduStart} - {props.info.eduEnd}
           </p>
           <div className="exp-container" style={{ padding: ".5rem" }}>
             <p style={{ fontSize: "18px", fontWeight: "bold" }}>
-              {props.info.jobTitle}
+              {props.info.schoolName} {props.info.eduLocation}
             </p>
             <p style={{ fontStyle: "italic", fontSize: "16px" }}>
-              {props.info.company}
+              {props.info.major}
             </p>
-            <p>{props.info.jobDescription}</p>
+            <p>{props.info.eduNotes}</p>
           </div>
         </div>
       </div>
