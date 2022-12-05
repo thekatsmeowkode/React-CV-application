@@ -53,6 +53,7 @@
     padding-top: 1rem;
     padding-left:1rem;
     padding-right:1rem;
+    margin-left:2rem;
 }
 
 .fullName-render {
@@ -166,4 +167,16 @@ h6 {
 
 .exp-container {
     max-width: 80vw;
+}
+
+button {
+    color:var(--dark-cornflower);
+    background-color: var(--light-cornflower);
+    border: 1px solid var(--dark-cornflower);
+    border-radius: 3px;
+}
+
+button:hover {
+    background-color: rgb(65, 98, 161);
+    color:white
 }

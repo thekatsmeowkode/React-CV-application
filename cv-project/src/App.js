@@ -115,7 +115,6 @@ export default class App extends Component {
   handleEditExperience = (event) => {
     let identifier = event.target.id;
     let itemToEdit = this.state.experiences.find(obj => obj.id === identifier)
-    console.log(itemToEdit)
     this.setState({experience: {
       id: identifier,
       dateStart: itemToEdit.dateStart,
@@ -128,6 +127,24 @@ export default class App extends Component {
       return item.id !== identifier
     })})
   }
+
+  handleEditEducation = (event) => {
+    let identifier = event.target.id;
+    let itemToEdit = this.state.educations.find(obj => obj.id === identifier)
+    this.setState({education: {
+      id: identifier,
+      eduStart: itemToEdit.eduStart,
+      eduEnd: itemToEdit.eduEnd,
+      schoolName: itemToEdit.schoolName,
+      major: itemToEdit.major,
+      eduLocation: itemToEdit.eduLocation,
+      eduNotes: itemToEdit.eduNotes
+    }})
+    this.setState({ educations: this.state.educations.filter(function (item) {
+      return item.id !== identifier
+    })})
+  }
+
 
   // onSubmitCV = (event) => {
   //   event.preventDefault();
@@ -351,7 +368,6 @@ export default class App extends Component {
                 Add Education
               </button>
             </div>
-            <button>Generate CV</button>
           </form>
         </div>
         <div className="right-side">
@@ -385,6 +401,7 @@ export default class App extends Component {
                   <Education
                     handleDeleteEducation={this.handleDeleteEducation}
                     handleChange={this.handleChangeEdu}
+                    handleEditEducation={this.handleEditEducation}
                     key={item.id}
                     info={item}
                     id={item.id}

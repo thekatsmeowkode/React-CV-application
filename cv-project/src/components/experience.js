@@ -8,16 +8,16 @@ export default function Experience(props) {
           display: "flex",
           flexDirection: "column",
           gap: "10px",
-          marginLeft: "-1.5rem",
-          alignItems: "center",
-          justifyContent: "flex-start",
+          marginLeft: "-3rem",
+          alignItems: 'flex-end',
+          justifyContent: "center",
         }}
       >
         <button
           className="edit-button"
           id={props.info.id}
           onClick={props.handleEditExperience}
-          style={{ height: "1.5rem" }}
+          style={{ height: "1.5rem", padding: '5px' }}
         >
           Edit{" "}
         </button>
@@ -25,7 +25,7 @@ export default function Experience(props) {
           className="delete-button"
           id={props.info.id}
           onClick={props.handleDeleteExperience}
-          style={{ height: "1.5rem" }}
+          style={{ height: "1.5rem", padding: '5px'}}
         >
           Delete
         </button>
