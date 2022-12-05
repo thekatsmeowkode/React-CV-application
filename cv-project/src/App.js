@@ -7,7 +7,7 @@ import Sidebar from "./components/sidebar";
 import Experience from "./components/experience";
 import Education from "./components/education";
 
-export default class App extends Component {
+function App() {
   state = {
     personalInfo: {
       fullName: "",
