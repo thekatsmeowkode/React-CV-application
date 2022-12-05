@@ -1,9 +1,9 @@
 import React from "react";
 
-export default class Header extends React.Component {
-  render() {
-    let fullName = this.props.fullName;
-    let title = this.props.title;
+export default function Header(props) {
+  
+    let fullName = props.fullName;
+    let title = props.title;
 
     return (
       <div className="resume-header" >
@@ -11,5 +11,4 @@ export default class Header extends React.Component {
         <h6>{title}</h6>
       </div>
     );
-  }
 }

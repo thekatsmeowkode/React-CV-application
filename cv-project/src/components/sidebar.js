@@ -1,10 +1,10 @@
 import React from "react";
 
-export default class Sidebar extends React.Component {
-  render() {
-    let address = this.props.address;
-    let phone = this.props.phone;
-    let website = this.props.website;
+export default function Sidebar(props) {
+  
+    let address = props.address;
+    let phone = props.phone;
+    let website = props.website;
 
     return (
       <div>
@@ -17,5 +17,4 @@ export default class Sidebar extends React.Component {
         <p className="sidebar-headers"></p>
       </div>
     );
-  }
 }

@@ -1,74 +1,70 @@
 import "./App.css";
 import uniqid from "uniqid";
 import React, { Component } from "react";
+import {useState, useEffect} from 'react'
 import Header from "./components/header";
 import Input from "./components/input-field";
 import Sidebar from "./components/sidebar";
 import Experience from "./components/experience";
 import Education from "./components/education";
 
-function App() {
-  state = {
-    personalInfo: {
+export default function App() {
+  const [personalState, setPersonalState] = useState({
       fullName: "",
       address: "",
       title: "",
       website: "",
       description: "",
       phone: "",
-    },
-    experience: {
+    })
+  
+  const [experienceState, setExperienceState] = useState({
       id: "",
       dateStart: "",
       dateEnd: "",
       jobTitle: "",
       company: "",
       jobDescription: "",
-    },
-    experiences: [],
-    education: {
+    }) 
+
+  const [allExperiences, setAllExperiences] = useState([])
+
+  const [educationState, setEducationState] = useState({
       eduStart: "",
       eduEnd: "",
       schoolName: "",
       major: "",
       eduLocation: "",
       eduNotes: "",
-    },
-    educations: [],
+    })
+    
+  const [allEducation, setAllEducation] = useState([])
+
+  function handleChange(event) {
+    setPersonalState((prevState) => ({
+      ...prevState,
+        [event.target.name]: event.target.value,
+      }))
+    }
+
+  function handleChangeExp(event) {
+    setExperienceState((prevState) => ({
+        ...prevState,
+        [event.target.name]: event.target.value,
+      }))
   };
 
-  handleChange = (event) => {
-    this.setState((prevState) => ({
-      personalInfo: {
-        ...prevState.personalInfo,
+  function handleChangeEdu(event) {
+    setEducationState((prevState) => ({
+        ...prevState,
         [event.target.name]: event.target.value,
-      },
     }));
   };
 
-  handleChangeExp = (event) => {
-    this.setState((prevState) => ({
-      experience: {
-        ...prevState.experience,
-        [event.target.name]: event.target.value,
-      },
-    }));
-  };
-
-  handleChangeEdu = (event) => {
-    this.setState((prevState) => ({
-      education: {
-        ...prevState.education,
-        [event.target.name]: event.target.value,
-      },
-    }));
-  };
-
-  handleAddExperience = (e, data) => {
+  function handleAddExperience(e, data) {
     e.preventDefault();
-    this.state.experiences.push(data);
-    this.setState({
-      experience: {
+    setAllExperiences((current) => [...current, experienceState])
+    setExperienceState({
         id: "",
         dateStart: "",
         dateEnd: "",
@@ -76,62 +72,59 @@ function App() {
         company: "",
         jobDescription: "",
       },
-    });
+    );
   };
 
-  handleAddEducation = (e, data) => {
+  function handleAddEducation(e, data) {
     e.preventDefault();
-    this.state.educations.push(data);
-    this.setState({
-      education: {
+    setAllEducation((current) => [...current, educationState])
+    setEducationState((prevState) => ({
         eduStart: "",
         eduEnd: "",
         schoolName: "",
         major: "",
         eduLocation: "",
         eduNotes: ""
-      },
-    });
+      }
+    ));
   };
 
-  handleDeleteExperience = (event) => {
+  function handleDeleteExperience(event) {
     let identifier = event.target.id;
-    this.setState({
-      experiences: this.state.experiences.filter(function (item) {
+    setAllExperiences((current) => ([
+      allExperiences.filter(function (item) {
         return item.id !== identifier;
-      }),
-    });
+      })]))
   };
 
-  handleDeleteEducation = (event) => {
+  function handleDeleteEducation(event) {
     let identifier = event.target.id;
-    this.setState({
-      educations: this.state.educations.filter(function (item) {
+    setAllEducation((prevState) => ([allEducation.filter(function (item) {
         return item.id !== identifier;
-      }),
-    });
+      })]
+    ))
   };
 
-  handleEditExperience = (event) => {
+  function handleEditExperience(event) {
     let identifier = event.target.id;
-    let itemToEdit = this.state.experiences.find(obj => obj.id === identifier)
-    this.setState({experience: {
+    let itemToEdit = allExperiences.find(obj => obj.id === identifier)
+    setExperienceState((prevState) => ({
       id: identifier,
       dateStart: itemToEdit.dateStart,
       dateEnd: itemToEdit.dateEnd,
       jobTitle: itemToEdit.jobTitle,
       company: itemToEdit.company,
       jobDescription: itemToEdit.jobDescription,
-    }})
-    this.setState({ experiences: this.state.experiences.filter(function (item) {
-      return item.id !== identifier
-    })})
+    }))
+    // setState((prevState) => ({ ...prevState, experiences: state.experiences.filter(function (item) {
+    //   return item.id !== identifier
+    // })}))
   }
 
-  handleEditEducation = (event) => {
+  function handleEditEducation(event) {
     let identifier = event.target.id;
-    let itemToEdit = this.state.educations.find(obj => obj.id === identifier)
-    this.setState({education: {
+    let itemToEdit = allEducation.find(obj => obj.id === identifier)
+    setEducationState((prevState) => ({
       id: identifier,
       eduStart: itemToEdit.eduStart,
       eduEnd: itemToEdit.eduEnd,
@@ -139,73 +132,57 @@ function App() {
       major: itemToEdit.major,
       eduLocation: itemToEdit.eduLocation,
       eduNotes: itemToEdit.eduNotes
-    }})
-    this.setState({ educations: this.state.educations.filter(function (item) {
-      return item.id !== identifier
-    })})
+    }))
+    // setState((prevState) => ({...prevState, educations: state.educations.filter(function (item) {
+    //   return item.id !== identifier
+    // })}))
   }
-
-
-  // onSubmitCV = (event) => {
-  //   event.preventDefault();
-  //   this.setState({
-  //     fullName: "",
-  //     address: "",
-  //     title: "",
-  //     website: "",
-  //     description: "",
-  //     phone: "",
-  //     dateStart: "",
-  //     dateEnd: "",
-  //   });
-  // };
-
-  render() {
+ 
     return (
       <div className="App">
         <div className="header">CV Creator</div>
         <div className="left-side">
-          <form onSubmit={this.onSubmitCV}>
+          <form >
             <div className="body-headers">Personal Information</div>
             <div className="grid-fields">
               <Input
                 type="text"
                 name="fullName"
                 id="fullName"
-                onChange={this.handleChange}
-                value={this.state.personalInfo.fullName}
+                onChange={handleChange}
+                value={personalState.fullName}
                 placeholder="Full Name"
               />
               <Input
                 type="text"
                 id="title"
                 name="title"
-                onChange={this.handleChange}
-                value={this.state.personalInfo.title}
+                onChange={handleChange}
+                value={personalState.title}
                 placeholder="Title"
               />
               <Input
                 type="text"
                 id="address"
                 name="address"
-                onChange={this.handleChange}
-                value={this.state.personalInfo.address}
+                onChange={handleChange}
+                value={personalState.address}
                 placeholder="Address"
               />
               <Input
                 type="text"
                 id="phone"
                 name="phone"
-                onChange={this.handleChange}
-                value={this.state.personalInfo.phone}
+                onChange={handleChange}
+                value={personalState.phone}
                 placeholder="Phone"
               />
               <Input
                 type="text"
                 id="website"
                 name="website"
-                onChange={this.handleChange}
-                value={this.state.personalInfo.website}
+                onChange={handleChange}
+                value={personalState.website}
                 placeholder="Website"
               />
               <div className="input-field-container">
@@ -217,8 +194,8 @@ function App() {
                   type="textarea"
                   id="description"
                   name="description"
-                  onChange={this.handleChange}
-                  value={this.state.personalInfo.description}
+                  onChange={handleChange}
+                  value={personalState.description}
                   placeholder="Description"
                 ></textarea>
               </div>
@@ -230,32 +207,32 @@ function App() {
                   type="text"
                   id="dateStart"
                   name="dateStart"
-                  onChange={this.handleChangeExp}
-                  value={this.state.experience.dateStart}
+                  onChange={handleChangeExp}
+                  value={experienceState.dateStart}
                   placeholder="Date Started"
                 />
                 <Input
                   type="text"
                   id="dateEnd"
                   name="dateEnd"
-                  onChange={this.handleChangeExp}
-                  value={this.state.experience.dateEnd}
+                  onChange={handleChangeExp}
+                  value={experienceState.dateEnd}
                   placeholder="Date Ended"
                 />
                 <Input
                   type="text"
                   id="jobTitle"
                   name="jobTitle"
-                  onChange={this.handleChangeExp}
-                  value={this.state.experience.jobTitle}
+                  onChange={handleChangeExp}
+                  value={experienceState.jobTitle}
                   placeholder="Job Title"
                 />
                 <Input
                   type="text"
                   id="company"
                   name="company"
-                  onChange={this.handleChangeExp}
-                  value={this.state.experience.company}
+                  onChange={handleChangeExp}
+                  value={experienceState.company}
                   placeholder="Company Name / Location"
                 />
                 <div className="input-field-container">
@@ -267,8 +244,8 @@ function App() {
                     type="textarea"
                     id="jobDescription"
                     name="jobDescription"
-                    onChange={this.handleChangeExp}
-                    value={this.state.experience.jobDescription}
+                    onChange={handleChangeExp}
+                    value={experienceState.jobDescription}
                     placeholder="jobDescription"
                   ></textarea>
                 </div>
@@ -281,13 +258,13 @@ function App() {
                   margin: ".5rem",
                 }}
                 onClick={(e) =>
-                  this.handleAddExperience(e, {
+                  handleAddExperience(e, {
                     id: uniqid(),
-                    dateStart: this.state.experience.dateStart,
-                    dateEnd: this.state.experience.dateEnd,
-                    jobTitle: this.state.experience.jobTitle,
-                    company: this.state.experience.company,
-                    jobDescription: this.state.experience.jobDescription,
+                    dateStart: experienceState.dateStart,
+                    dateEnd: experienceState.dateEnd,
+                    jobTitle: experienceState.jobTitle,
+                    company: experienceState.company,
+                    jobDescription: experienceState.jobDescription,
                   })
                 }
               >
@@ -301,48 +278,48 @@ function App() {
                   type="text"
                   id="eduStart"
                   name="eduStart"
-                  onChange={this.handleChangeEdu}
-                  value={this.state.education.eduStart}
+                  onChange={handleChangeEdu}
+                  value={educationState.eduStart}
                   placeholder="Date Started"
                 />
                 <Input
                   type="text"
                   id="eduEnd"
                   name="eduEnd"
-                  onChange={this.handleChangeEdu}
-                  value={this.state.education.eduEnd}
+                  onChange={handleChangeEdu}
+                  value={educationState.eduEnd}
                   placeholder="Date Ended"
                 />
                 <Input
                   type="text"
                   id="schoolName"
                   name="schoolName"
-                  onChange={this.handleChangeEdu}
-                  value={this.state.education.schoolName}
+                  onChange={handleChangeEdu}
+                  value={educationState.schoolName}
                   placeholder="School Name"
                 />
                 <Input
                   type="text"
                   id="eduLocation"
                   name="eduLocation"
-                  onChange={this.handleChangeEdu}
-                  value={this.state.education.eduLocation}
+                  onChange={handleChangeEdu}
+                  value={educationState.eduLocation}
                   placeholder="Location"
                 />
                 <Input
                   type="text"
                   id="major"
                   name="major"
-                  onChange={this.handleChangeEdu}
-                  value={this.state.education.major}
+                  onChange={handleChangeEdu}
+                  value={educationState.major}
                   placeholder="Major / Minor"
                 />
                 <Input
                   type="text"
                   id="eduNotes"
                   name="eduNotes"
-                  onChange={this.handleChangeEdu}
-                  value={this.state.education.eduNotes}
+                  onChange={handleChangeEdu}
+                  value={educationState.eduNotes}
                   placeholder="Notes"
                 />
               </div>
@@ -354,14 +331,14 @@ function App() {
                   margin: ".5rem",
                 }}
                 onClick={(e) =>
-                  this.handleAddEducation(e, {
+                  handleAddEducation(e, {
                     id: uniqid(),
-                    eduStart: this.state.education.eduStart,
-                    eduEnd: this.state.education.eduEnd,
-                    schoolName: this.state.education.schoolName,
-                    eduLocation: this.state.education.eduLocation,
-                    major: this.state.education.major,
-                    eduNotes: this.state.education.eduNotes
+                    eduStart: educationState.eduStart,
+                    eduEnd: educationState.eduEnd,
+                    schoolName: educationState.schoolName,
+                    eduLocation: educationState.eduLocation,
+                    major: educationState.major,
+                    eduNotes: educationState.eduNotes
                   })
                 }
               >
@@ -373,22 +350,22 @@ function App() {
         <div className="right-side">
           <div className="resume">
             <Header
-              fullName={this.state.personalInfo.fullName}
-              title={this.state.personalInfo.title}
+              fullName={personalState.fullName}
+              title={personalState.title}
             />
             <div className="body">
               <div className="resume-details">
                 <p className="description">
-                  {this.state.personalInfo.description}
+                  {personalState.description}
                 </p>
                 <p className="resume-headers" style={{ marginRight: "auto" }}>
             Experience
           </p>
-                {this.state.experiences.map((item) => (
+                {allExperiences.map((item) => (
                   <Experience
-                    handleDeleteExperience={this.handleDeleteExperience}
-                    handleChange={this.handleChangeExp}
-                    handleEditExperience={this.handleEditExperience}
+                    handleDeleteExperience={handleDeleteExperience}
+                    handleChange={handleChangeExp}
+                    handleEditExperience={handleEditExperience}
                     key={item.id}
                     info={item}
                     id={item.id}
@@ -397,11 +374,11 @@ function App() {
               <p className="resume-headers" style={{ marginRight: "auto" }}>
             Education
           </p>
-                {this.state.educations.map((item) => (
+                {allEducation.map((item) => (
                   <Education
-                    handleDeleteEducation={this.handleDeleteEducation}
-                    handleChange={this.handleChangeEdu}
-                    handleEditEducation={this.handleEditEducation}
+                    handleDeleteEducation={handleDeleteEducation}
+                    handleChange={handleChangeEdu}
+                    handleEditEducation={handleEditEducation}
                     key={item.id}
                     info={item}
                     id={item.id}
@@ -410,14 +387,14 @@ function App() {
               </div>
               <Sidebar
                 className="sidebar"
-                address={this.state.personalInfo.address}
-                phone={this.state.personalInfo.phone}
-                website={this.state.personalInfo.website}
+                address={personalState.address}
+                phone={personalState.phone}
+                website={personalState.website}
               />
             </div>
           </div>
         </div>
       </div>
     );
-  }
+  
 }
