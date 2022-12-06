@@ -3,8 +3,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 export default function Experience(props) {
 
-  const {id, info} = props
-
   return (
     <div className="experience">
       <div
@@ -23,7 +21,7 @@ export default function Experience(props) {
           onClick={props.handleEditExperience}
           style={{ height: "1.5rem", padding: '5px' }}
         >
-          <FontAwesomeIcon icon="fa-solid fa-pen-to-square" aria-label="Edit experience"/>
+          <FontAwesomeIcon icon="fa-solid fa-pen-to-square" aria-label="Edit experience" onClick={props.handleEditExperience}/>
         </button>
         <button
           className="delete-button"
@@ -31,7 +29,7 @@ export default function Experience(props) {
           onClick={props.handleDeleteExperience}
           style={{ height: "1.5rem", padding: '5px'}}
         >
-          <FontAwesomeIcon icon="fa-solid fa-trash-can" aria-label="Delete experience"/>
+          <FontAwesomeIcon icon="fa-solid fa-trash-can" aria-label="Delete experience" onClick={props.handleEditEducation}/>
         </button>
       </div>
       <div className="resume-split">

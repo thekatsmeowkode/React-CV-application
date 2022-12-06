@@ -10,6 +10,7 @@ import Education from "./components/education";
 import ReactDOM from 'react-dom'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faPenToSquare, faTrashCan } from '@fortawesome/free-solid-svg-icons'
+import { eventWrapper } from "@testing-library/user-event/dist/utils";
 
 library.add(faPenToSquare, faTrashCan)
 
@@ -118,36 +119,38 @@ export default function App() {
   }
 
   function handleEditExperience(event) {
-    let identifier = event.target.id;
+    //fix for if user clicks on the FA icon instead of the button
+    let targetId = event.target.id
+    let identifier = targetId === '' ? event.currentTarget.parentElement.id : event.target.id
     let itemToEdit = allExperiences.find((obj) => obj.id === identifier);
-    setExperienceState((prevState) => ({
-      id: identifier,
+    setExperienceState({
       dateStart: itemToEdit.dateStart,
       dateEnd: itemToEdit.dateEnd,
       jobTitle: itemToEdit.jobTitle,
       company: itemToEdit.company,
       jobDescription: itemToEdit.jobDescription,
-    }));
-    // setState((prevState) => ({ ...prevState, experiences: state.experiences.filter(function (item) {
-    //   return item.id !== identifier
-    // })}))
+    });
+    const newItems = allExperiences.filter(function (item) {
+      return item.id !== identifier
+    })
+    setAllExperiences(newItems)
   }
-
+  
   function handleEditEducation(event) {
     let identifier = event.target.id;
     let itemToEdit = allEducation.find((obj) => obj.id === identifier);
-    setEducationState((prevState) => ({
-      id: identifier,
+    const newItems = allEducation.filter(function (item) {
+      return item.id !== identifier
+    })
+    setAllEducation(newItems)
+    setEducationState({
       eduStart: itemToEdit.eduStart,
       eduEnd: itemToEdit.eduEnd,
       schoolName: itemToEdit.schoolName,
       major: itemToEdit.major,
       eduLocation: itemToEdit.eduLocation,
       eduNotes: itemToEdit.eduNotes,
-    }));
-    // setState((prevState) => ({...prevState, educations: state.educations.filter(function (item) {
-    //   return item.id !== identifier
-    // })}))
+    });
   }
 
   return (
