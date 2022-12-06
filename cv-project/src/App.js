@@ -7,15 +7,14 @@ import Input from "./components/input-field";
 import Sidebar from "./components/sidebar";
 import Experience from "./components/experience";
 import Education from "./components/education";
-import ReactDOM from 'react-dom'
-import { library } from '@fortawesome/fontawesome-svg-core'
-import { faPenToSquare, faTrashCan } from '@fortawesome/free-solid-svg-icons'
+import ReactDOM from "react-dom";
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { faPenToSquare, faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import { eventWrapper } from "@testing-library/user-event/dist/utils";
 
-library.add(faPenToSquare, faTrashCan)
+library.add(faPenToSquare, faTrashCan);
 
 export default function App() {
-
   const [personalState, setPersonalState] = useState({
     fullName: "",
     address: "",
@@ -43,7 +42,7 @@ export default function App() {
     schoolName: "",
     major: "",
     eduLocation: "",
-    eduNotes: ""
+    eduNotes: "",
   });
 
   const [allEducation, setAllEducation] = useState([]);
@@ -102,45 +101,48 @@ export default function App() {
 
   function handleDeleteExperience(event) {
     let targetId = event.target.id;
-    let identifier = targetId === '' ? event.currentTarget.parentElement.id : event.target.id
-    setAllExperiences(
-      allExperiences.filter(function (item) {
-        return item.id !== identifier;
-      })
-    );
+    let identifier =
+      targetId === "" ? event.currentTarget.parentElement.id : event.target.id;
+    setAllExperiences((prevState) => {
+      const arr = prevState.filter((item) => item.id !== identifier);
+      return arr;
+    });
   }
 
   function handleDeleteEducation(event) {
-     let targetId = event.target.id;
-     let identifier = targetId === '' ? event.currentTarget.parentElement.id : event.target.id
-    setAllEducation(
-      allEducation.filter(function (item) {
-        return item.id !== identifier;
-      })
-    );
+    let targetId = event.target.id;
+    let identifier =
+      targetId === "" ? event.currentTarget.parentElement.id : event.target.id;
+    setAllEducation((prevState) => {
+      const arr = prevState.filter((item) => item.id !== identifier);
+      return arr;
+    });
   }
 
   function handleEditExperience(event) {
     //fix for if user clicks on the FA icon instead of the button
-    let targetId = event.target.id
-    let identifier = targetId === '' ? event.currentTarget.parentElement.id : event.target.id
-    let itemToEdit = allExperiences.find((obj) => obj.id === identifier);
-    setExperienceState({
+    let targetId = event.target.id;
+    let identifier =
+      targetId === "" ? event.currentTarget.parentElement.id : event.target.id;
+    let itemToEdit = allExperiences.find((obj) => {return obj.id === identifier});
+    setExperienceState((prevState) => ({
+      id: itemToEdit.id,
       dateStart: itemToEdit.dateStart,
       dateEnd: itemToEdit.dateEnd,
       jobTitle: itemToEdit.jobTitle,
       company: itemToEdit.company,
       jobDescription: itemToEdit.jobDescription,
-    });
+    }));
     const newItems = allExperiences.filter(function (item) {
-      return item.id !== identifier
-    })
-    setAllExperiences(newItems)
+      return item.id !== identifier;
+    });
+    setAllExperiences(newItems);
   }
-  
+
   function handleEditEducation(event) {
-    let targetId = event.target.id
-    let identifier = targetId === '' ? event.currentTarget.parentElement.id : event.target.id
+    let targetId = event.target.id;
+    let identifier =
+      targetId === "" ? event.currentTarget.parentElement.id : event.target.id;
     let itemToEdit = allEducation.find((obj) => obj.id === identifier);
     setEducationState({
       eduStart: itemToEdit.eduStart,
@@ -151,9 +153,9 @@ export default function App() {
       eduNotes: itemToEdit.eduNotes,
     });
     const newItems = allEducation.filter(function (item) {
-      return item.id !== identifier
-    })
-    setAllEducation(newItems)
+      return item.id !== identifier;
+    });
+    setAllEducation(newItems);
   }
 
   return (
@@ -358,6 +360,7 @@ export default function App() {
               <p className="resume-headers" style={{ marginRight: "auto" }}>
                 Experience
               </p>
+              {useEffect(() => console.log("hello"), [allExperiences])}
               {allExperiences.map((item) => (
                 <Experience
                   handleDeleteExperience={handleDeleteExperience}
