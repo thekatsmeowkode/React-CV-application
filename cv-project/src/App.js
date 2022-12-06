@@ -119,43 +119,54 @@ export default function App() {
     });
   }
 
+  function findExperience(idToFind) {
+    let newObj = allExperiences.find((obj) => {return obj.id === idToFind});
+    return newObj
+  }
+
+  function findEducation(idToFind) {
+    let newObj = allEducation.find((obj) => {return obj.id === idToFind});
+    return newObj
+  }
+
   function handleEditExperience(event) {
     //fix for if user clicks on the FA icon instead of the button
     let targetId = event.target.id;
     let identifier =
       targetId === "" ? event.currentTarget.parentElement.id : event.target.id;
-    let itemToEdit = allExperiences.find((obj) => {return obj.id === identifier});
+    let newObj = findExperience(identifier)
     setExperienceState((prevState) => ({
-      id: itemToEdit.id,
-      dateStart: itemToEdit.dateStart,
-      dateEnd: itemToEdit.dateEnd,
-      jobTitle: itemToEdit.jobTitle,
-      company: itemToEdit.company,
-      jobDescription: itemToEdit.jobDescription,
+      id: newObj.id,
+      dateStart:  newObj.dateStart,
+      dateEnd:  newObj.dateEnd,
+      jobTitle:  newObj.jobTitle,
+      company:  newObj.company,
+      jobDescription: newObj.jobDescription,
     }));
-    const newItems = allExperiences.filter(function (item) {
-      return item.id !== identifier;
-    });
-    setAllExperiences(newItems);
+    // const newItems = allExperiences.filter(function (item) {
+    //   return item.id !== identifier;
+    // });
+    // setAllExperiences((prevState) => [...prevState, newItems]);
+    handleDeleteExperience(event)
   }
 
   function handleEditEducation(event) {
     let targetId = event.target.id;
     let identifier =
       targetId === "" ? event.currentTarget.parentElement.id : event.target.id;
-    let itemToEdit = allEducation.find((obj) => obj.id === identifier);
+    let newObj = findEducation(identifier)
     setEducationState({
-      eduStart: itemToEdit.eduStart,
-      eduEnd: itemToEdit.eduEnd,
-      schoolName: itemToEdit.schoolName,
-      major: itemToEdit.major,
-      eduLocation: itemToEdit.eduLocation,
-      eduNotes: itemToEdit.eduNotes,
+      eduStart: newObj.eduStart,
+      eduEnd: newObj.eduEnd,
+      schoolName: newObj.schoolName,
+      major: newObj.major,
+      eduLocation: newObj.eduLocation,
+      eduNotes: newObj.eduNotes,
     });
-    const newItems = allEducation.filter(function (item) {
-      return item.id !== identifier;
-    });
-    setAllEducation(newItems);
+    // const newItems = allEducation.filter(function (item) {
+    //   return item.id !== identifier;
+    // });
+    handleDeleteEducation(event);
   }
 
   return (
