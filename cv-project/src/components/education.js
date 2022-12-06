@@ -20,7 +20,7 @@ export default function Education(props) {
           id={props.info.id}
           onClick={props.handleEditEducation}
         >
-         <FontAwesomeIcon icon="fa-solid fa-pen-to-square" aria-label="Edit education item"/>
+         <FontAwesomeIcon icon="fa-solid fa-pen-to-square" aria-label="Edit education item" onClick={props.handleEditEducation}/>
         </button>
         <button
           className="delete-button"
@@ -28,7 +28,7 @@ export default function Education(props) {
           onClick={props.handleDeleteEducation}
           style={{ height: "1.5rem", padding: '5px'}}
         >
-         <FontAwesomeIcon icon="fa-solid fa-trash-can" aria-label="Delete education item"/>
+         <FontAwesomeIcon icon="fa-solid fa-trash-can" aria-label="Delete education item" onClick={props.handleDeleteEducation}/>
         </button>
       </div>
       <div className="resume-split">

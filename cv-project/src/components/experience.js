@@ -29,7 +29,7 @@ export default function Experience(props) {
           onClick={props.handleDeleteExperience}
           style={{ height: "1.5rem", padding: '5px'}}
         >
-          <FontAwesomeIcon icon="fa-solid fa-trash-can" aria-label="Delete experience" onClick={props.handleEditEducation}/>
+          <FontAwesomeIcon icon="fa-solid fa-trash-can" aria-label="Delete experience" onClick={props.handleDeleteExperience}/>
         </button>
       </div>
       <div className="resume-split">

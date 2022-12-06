@@ -101,7 +101,8 @@ export default function App() {
   }
 
   function handleDeleteExperience(event) {
-    let identifier = event.target.id;
+    let targetId = event.target.id;
+    let identifier = targetId === '' ? event.currentTarget.parentElement.id : event.target.id
     setAllExperiences(
       allExperiences.filter(function (item) {
         return item.id !== identifier;
@@ -110,7 +111,8 @@ export default function App() {
   }
 
   function handleDeleteEducation(event) {
-    let identifier = event.target.id;
+     let targetId = event.target.id;
+     let identifier = targetId === '' ? event.currentTarget.parentElement.id : event.target.id
     setAllEducation(
       allEducation.filter(function (item) {
         return item.id !== identifier;
@@ -137,12 +139,9 @@ export default function App() {
   }
   
   function handleEditEducation(event) {
-    let identifier = event.target.id;
+    let targetId = event.target.id
+    let identifier = targetId === '' ? event.currentTarget.parentElement.id : event.target.id
     let itemToEdit = allEducation.find((obj) => obj.id === identifier);
-    const newItems = allEducation.filter(function (item) {
-      return item.id !== identifier
-    })
-    setAllEducation(newItems)
     setEducationState({
       eduStart: itemToEdit.eduStart,
       eduEnd: itemToEdit.eduEnd,
@@ -151,6 +150,10 @@ export default function App() {
       eduLocation: itemToEdit.eduLocation,
       eduNotes: itemToEdit.eduNotes,
     });
+    const newItems = allEducation.filter(function (item) {
+      return item.id !== identifier
+    })
+    setAllEducation(newItems)
   }
 
   return (
