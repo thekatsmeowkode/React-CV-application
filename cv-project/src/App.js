@@ -11,6 +11,7 @@ import ReactDOM from "react-dom";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { faPenToSquare, faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import { eventWrapper } from "@testing-library/user-event/dist/utils";
+import Skills from "./components/skills";
 
 library.add(faPenToSquare, faTrashCan);
 
@@ -47,6 +48,10 @@ export default function App() {
 
   const [allEducation, setAllEducation] = useState([]);
 
+  const [skillState, setSkillState] = useState("");
+
+  const [allSkills, setAllSkills] = useState([]);
+
   function handleChange(event) {
     setPersonalState((prevState) => ({
       ...prevState,
@@ -72,7 +77,11 @@ export default function App() {
     }));
   }
 
-  function handleAddExperience(e, data) {
+  function handleChangeSkill(event) {
+    setSkillState(event.target.value);
+  }
+
+  function handleAddExperience(e, dat) {
     e.preventDefault();
     setAllExperiences((current) => [...current, experienceState]);
     setExperienceState({
@@ -85,7 +94,7 @@ export default function App() {
     });
   }
 
-  function handleAddEducation(e, data) {
+  function handleAddEducation(e) {
     e.preventDefault();
     setAllEducation((current) => [...current, educationState]);
     setEducationState({
@@ -97,6 +106,12 @@ export default function App() {
       eduLocation: "",
       eduNotes: "",
     });
+  }
+
+  function handleAddSkill(e) {
+    e.preventDefault();
+    setAllSkills((current) => [...current, skillState]);
+    setSkillState("");
   }
 
   function handleDeleteExperience(event) {
@@ -119,42 +134,68 @@ export default function App() {
     });
   }
 
+  function handleDeleteSkill(event) {
+    let targetId = event.target.id;
+    let identifier =
+      targetId === "" ? event.currentTarget.parentElement.id : event.target.id;
+    setAllSkills((prevState) => {
+      const arr = prevState.filter((item) => item !== identifier)
+      return arr
+    })
+  }
+
   function findExperience(idToFind) {
-    let newObj = allExperiences.find((obj) => {return obj.id === idToFind});
-    return newObj
+    let newObj = allExperiences.find((obj) => {
+      return obj.id === idToFind;
+    });
+    return newObj;
   }
 
   function findEducation(idToFind) {
-    let newObj = allEducation.find((obj) => {return obj.id === idToFind});
+    let newObj = allEducation.find((obj) => {
+      return obj.id === idToFind;
+    });
+    return newObj;
+  }
+
+  function findSkill(idToFind) {
+    let newObj = allSkills.find((obj) => {return obj === idToFind})
     return newObj
   }
 
+  function handleEditSkill(event) {
+    let targetId = event.target.id
+    let identifier =  targetId === "" ? event.currentTarget.parentElement.id : event.target.id;
+    let newObj = findSkill(identifier)
+    setSkillState(newObj)
+    handleDeleteSkill(event)
+  }
   function handleEditExperience(event) {
     //fix for if user clicks on the FA icon instead of the button
     let targetId = event.target.id;
     let identifier =
       targetId === "" ? event.currentTarget.parentElement.id : event.target.id;
-    let newObj = findExperience(identifier)
+    let newObj = findExperience(identifier);
     setExperienceState((prevState) => ({
       id: newObj.id,
-      dateStart:  newObj.dateStart,
-      dateEnd:  newObj.dateEnd,
-      jobTitle:  newObj.jobTitle,
-      company:  newObj.company,
+      dateStart: newObj.dateStart,
+      dateEnd: newObj.dateEnd,
+      jobTitle: newObj.jobTitle,
+      company: newObj.company,
       jobDescription: newObj.jobDescription,
     }));
     // const newItems = allExperiences.filter(function (item) {
     //   return item.id !== identifier;
     // });
     // setAllExperiences((prevState) => [...prevState, newItems]);
-    handleDeleteExperience(event)
+    handleDeleteExperience(event);
   }
 
   function handleEditEducation(event) {
     let targetId = event.target.id;
     let identifier =
       targetId === "" ? event.currentTarget.parentElement.id : event.target.id;
-    let newObj = findEducation(identifier)
+    let newObj = findEducation(identifier);
     setEducationState({
       eduStart: newObj.eduStart,
       eduEnd: newObj.eduEnd,
@@ -292,6 +333,26 @@ export default function App() {
             >
               Add Experience
             </button>
+            <div className="body-headers">Skills</div>
+            <Input
+              type="text"
+              id="skill"
+              name="skill"
+              onChange={handleChangeSkill}
+              value={skillState}
+              placeholder="Skill"
+            />
+            <button
+              style={{
+                height: "2rem",
+                width: "100%",
+                padding: ".5rem",
+                margin: ".5rem",
+              }}
+              onClick={handleAddSkill}
+            >
+              Add Skill
+            </button>
           </div>
           <div className="body-headers">Education</div>
           <div className="education-inputs">
@@ -394,12 +455,25 @@ export default function App() {
                 />
               ))}
             </div>
-            <Sidebar
-              className="sidebar"
-              address={personalState.address}
-              phone={personalState.phone}
-              website={personalState.website}
-            />
+            <div>
+              <Sidebar
+                className="sidebar"
+                address={personalState.address}
+                phone={personalState.phone}
+                website={personalState.website}
+              />
+               <p className='resume-headers'>Skills</p>
+              {allSkills.map((skill) => (
+                <Skills
+                  handleDeleteSkill={handleDeleteSkill}
+                  handleChange={handleChangeSkill}
+                  handleEditSkill={handleEditSkill}
+                  key={uniqid()}
+                  info={skill}
+                  id={uniqid()}
+                />
+              ))}
+            </div>
           </div>
         </div>
       </div>

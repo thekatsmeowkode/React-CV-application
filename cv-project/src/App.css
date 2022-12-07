@@ -5,7 +5,7 @@
 * {
     margin:0px;
     padding:0px;
-    overflow-wrap:break-word
+    overflow-wrap:break-word;
 }
     
 .App {
@@ -17,7 +17,7 @@
     color: bisque;
     display:grid;
     height:100vh;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr 2fr;
     grid-template-rows: 1fr 9fr;
 }
 
@@ -100,7 +100,7 @@ h6 {
 
 .body {
     display:grid;
-    grid-gap: 1rem;
+    grid-gap: 3rem;
     grid-template-columns: 2fr 1fr;
     color:black;
     grid-column: 0 / 1;
