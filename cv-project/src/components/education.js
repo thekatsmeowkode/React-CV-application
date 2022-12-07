@@ -1,4 +1,5 @@
 import React from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export default function Education(props) {
   return (
@@ -8,26 +9,34 @@ export default function Education(props) {
           display: "flex",
           flexDirection: "column",
           gap: "10px",
-          marginLeft: "-3rem",
-          alignItems: 'flex-end',
+          marginLeft: "-1.5rem",
+          alignItems: "flex-end",
           justifyContent: "center",
         }}
       >
         <button
           className="edit-button"
-          style={{ height: "1.5rem", padding: '5px' }}
+          style={{ height: "1.5rem", padding: "5px" }}
           id={props.info.id}
           onClick={props.handleEditEducation}
         >
-          Edit
+          <FontAwesomeIcon
+            icon="fa-solid fa-pen-to-square"
+            aria-label="Edit education item"
+            onClick={props.handleEditEducation}
+          />
         </button>
         <button
           className="delete-button"
           id={props.info.id}
           onClick={props.handleDeleteEducation}
-          style={{ height: "1.5rem", padding: '5px'}}
+          style={{ height: "1.5rem", padding: "5px" }}
         >
-          Delete
+          <FontAwesomeIcon
+            icon="fa-solid fa-trash-can"
+            aria-label="Delete education item"
+            onClick={props.handleDeleteEducation}
+          />
         </button>
       </div>
       <div className="resume-split">
