@@ -139,9 +139,9 @@ export default function App() {
     let identifier =
       targetId === "" ? event.currentTarget.parentElement.id : event.target.id;
     setAllSkills((prevState) => {
-      const arr = prevState.filter((item) => item !== identifier)
-      return arr
-    })
+      const arr = prevState.filter((item) => item !== identifier);
+      return arr;
+    });
   }
 
   function findExperience(idToFind) {
@@ -159,16 +159,19 @@ export default function App() {
   }
 
   function findSkill(idToFind) {
-    let newObj = allSkills.find((obj) => {return obj === idToFind})
-    return newObj
+    let newObj = allSkills.find((obj) => {
+      return obj === idToFind;
+    });
+    return newObj;
   }
 
   function handleEditSkill(event) {
-    let targetId = event.target.id
-    let identifier =  targetId === "" ? event.currentTarget.parentElement.id : event.target.id;
-    let newObj = findSkill(identifier)
-    setSkillState(newObj)
-    handleDeleteSkill(event)
+    let targetId = event.target.id;
+    let identifier =
+      targetId === "" ? event.currentTarget.parentElement.id : event.target.id;
+    let newObj = findSkill(identifier);
+    setSkillState(newObj);
+    handleDeleteSkill(event);
   }
   function handleEditExperience(event) {
     //fix for if user clicks on the FA icon instead of the button
@@ -462,7 +465,7 @@ export default function App() {
                 phone={personalState.phone}
                 website={personalState.website}
               />
-               <p className='resume-headers'>Skills</p>
+              <p className="resume-headers">Skills</p>
               {allSkills.map((skill) => (
                 <Skills
                   handleDeleteSkill={handleDeleteSkill}

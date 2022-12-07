@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export default function Skills(props) {
   return (
-    <div className="skills" style={{ display: "flex", alignItems:'baseline'}}>
+    <div className="skills" style={{ display: "flex", alignItems: "baseline" }}>
       <div
         className="skill-button-container"
         style={{
@@ -36,7 +36,13 @@ export default function Skills(props) {
         </button>
       </div>
       <div>
-        <p style={{ marginLeft: "1rem", marginBottom: ".75rem" , fontSize:'14px'}}>
+        <p
+          style={{
+            marginLeft: "1rem",
+            marginBottom: ".75rem",
+            fontSize: "14px",
+          }}
+        >
           - {props.info}
         </p>
       </div>
